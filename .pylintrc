@@ -1,0 +1,8 @@
+[BASIC]
+no-docstring-rgx=.*
+
+[REPORTS]
+reports=no
+
+[FORMAT]
+indent-string='  '
