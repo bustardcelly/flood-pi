@@ -21,7 +21,7 @@ parser.add_argument('-n', '--notify', default='bustardcelly@gmail.com', type=str
 
 adc = None
 notifier = None
-notifiees = []
+notifiees = None
 
 flood_adc = 0
 
@@ -36,11 +36,14 @@ def check_flood():
     print "Detected flood... %r" % level
     notifier.run(notifiees, level)
 
-def flood_watch():
+def flood_watch(notify_list):
   global adc
   global notifier
+  global notifiees
 
   running = True
+
+  notifiees = notify_list
   
   adc = ADC2()
   adc.open()
@@ -61,11 +64,9 @@ def flood_watch():
       sys.exit('\nExplicit close.')
 
 if __name__ == '__main__':
-  global notifiees
-
   GPIO.setmode(GPIO.BCM)
-  
+  notify_list = []
   unpack = Unpack()
   args = parser.parse_args(namespace=unpack)
-  notifiees.append(args.notify.split(','))
-  flood_watch()
+  notify_list.append(args.notify.split(','))
+  flood_watch(notify_list)
