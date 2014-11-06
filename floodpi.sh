@@ -14,7 +14,7 @@
 case "$1" in
   start)
     echo "Starting FloodPi"
-    python /home/ubuntu/flood-pi/floodpi.py -n bustardcelly@gmail.com
+    python /home/pi/flood-pi/floodpi.py -n bustardcelly@gmail.com
     ;;
   stop)
     echo "Stopping FloodPi"
