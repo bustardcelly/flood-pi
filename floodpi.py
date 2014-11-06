@@ -9,15 +9,19 @@ from floodpi.service.notifier import SMTPNotifier
 import RPi.GPIO as GPIO
 
 # 5.5, 100ohm resister
-MIN_THRESHOLD=300
-MAX_THRESHOLD=500
-CHECK_DELAY=30
+MIN_THRESHOLD = 300
+MAX_THRESHOLD = 500
+CHECK_DELAY = 15
 
-READ_SLEEP=1
+READ_SLEEP = 1
 
 parser = argparse.ArgumentParser(description="Flood-Pi.")
 parser.add_argument('-n', '--notify', default='bustardcelly@gmail.com', type=str, \
   help='Provide the email addresses to notify (comma-delimited).')
+parser.add_argument('-d', '--delay', default='15', type=int, \
+  help='Provide the desired delay (in minutes) to schedule check of flood detection (default 15 minutes).')
+parser.add_argument('-s', '--service', default=None, type=str, \
+  help='Optional RESTful endpoint to POST level information on the delay schedule. (eg, http://floodpi.com/level)')
 
 adc = None
 notifier = None
@@ -44,7 +48,7 @@ def flood_watch(notify_list):
   running = True
 
   notifiees = notify_list
-  
+
   adc = ADC2()
   adc.open()
 
@@ -52,11 +56,11 @@ def flood_watch(notify_list):
 
   schedule.every(CHECK_DELAY).minutes.do(check_flood)
   check_flood()
-  
+
   while running:
     try:
       schedule.run_pending()
-      time.sleep(READ_SLEEP);
+      time.sleep(READ_SLEEP)
     except KeyboardInterrupt:
       running = False
       schedule.clear()
