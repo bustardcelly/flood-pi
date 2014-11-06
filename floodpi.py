@@ -13,7 +13,7 @@ MIN_THRESHOLD=300
 MAX_THRESHOLD=500
 CHECK_DELAY=30
 
-READ_SLEEP=0.5
+READ_SLEEP=1
 
 parser = argparse.ArgumentParser(description="Flood-Pi.")
 parser.add_argument('-n', '--notify', default='bustardcelly@gmail.com', type=str, \
@@ -56,7 +56,7 @@ def flood_watch(notify_list):
   while running:
     try:
       schedule.run_pending()
-      time.sleep(1);
+      time.sleep(READ_SLEEP);
     except KeyboardInterrupt:
       running = False
       schedule.clear()

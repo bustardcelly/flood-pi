@@ -37,3 +37,11 @@ Start
 ```
 $ sudo python floodpi.py -n bustardcelly@gmail.com
 ```
+
+Add to init.d
+---
+```
+$ sudo cp /home/pi/flood-pi/floodpi.sh /etc/init.d/floodpi
+$ sudo update-rc.d floodpi defaults
+$ sudo /etc/init.d/floodpi start
+```
