@@ -12,7 +12,6 @@ class SMTPNotifier:
     pass
 
   def run(self, email_list, level):
-    # TODO: debounce
     body = 'A flood detection of level %r has been detected.' % level
     message = 'Subject: %s\n\n%s' % (SUBJECT, body)
     server = smtplib.SMTP('smtp.gmail.com:587')

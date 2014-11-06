@@ -29,7 +29,7 @@ $ cd flood-pi
 $ mkvirtualenv flood-pi
 
 $ workon flood-pi
-$ pip install -r requirements.txt --system-site-packages
+$ sudo pip install -r requirements.txt ---system-site-packages
 ```
 
 Start
