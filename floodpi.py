@@ -6,16 +6,14 @@ from ConfigParser import SafeConfigParser
 
 from floodpi.control.mcp3008 import ADC
 from floodpi.control.mcp3008 import ADC2
+from floodpi.detector.flood import FloodDetector
 from floodpi.service.notifier import SMTPNotifier
+from floodpi.service.notifier import RESTNotifier
 
 import RPi.GPIO as GPIO
 
-# 5.5, 100ohm resister
-MIN_THRESHOLD = 300
-MAX_THRESHOLD = 500
-CHECK_DELAY = 15
-
 READ_SLEEP = 1
+FLOOD_ADC_PIN = 0
 
 conf = SafeConfigParser()
 conf.read('config.ini')
@@ -25,39 +23,50 @@ parser.add_argument('-n', '--notify', default='bustardcelly@gmail.com', type=str
   help='Provide the email addresses to notify (comma-delimited).')
 parser.add_argument('-d', '--delay', default='15', type=int, \
   help='Provide the desired delay (in minutes) to schedule check of flood detection (default 15 minutes).')
+# 300,500 min/max based on 5.5, 100ohm resister
+parser.add_argument('-r', '--range', default='300,500', type=str, \
+  help='Provide the comma-delimited min/max range that is considered within flood range (0-1024, default 300,500).')
 
 adc = None
+service = None
 notifier = None
-notifiees = None
-
-flood_adc = 0
+flood_detector = None
 
 class Unpack(object):
   pass
 
 def check_flood():
-  global adc
-  global notifiees
-  level = adc.readadc(flood_adc)
-  if level > MIN_THRESHOLD and level < MAX_THRESHOLD:
+  global flood_detector
+  level = adc.readadc(FLOOD_ADC_PIN)
+  if flood_detector.detect(level):
     print "Detected flood... %r" % level
-    notifier.run(notifiees, level)
+    notifier.notify(level)
+  if not service is None:
+    service.notify(level)
 
-def flood_watch(notify_list):
+def flood_watch(range, notify_list, delay):
   global adc
+  global service
   global notifier
-  global notifiees
+  global flood_detector
 
   running = True
-
-  notifiees = notify_list
 
   adc = ADC2()
   adc.open()
 
-  notifier = SMTPNotifier(conf.get('smtp', 'user'), conf.get('smtp', 'password'))
+  if conf.has_section('service'):
+    base_url = conf.get('service', 'baseUrl')
+    base_port = conf.get('service', 'basePort')
+    endpoint = conf.get('service', 'postEndpoint')
+    service = RESTNotifier(base_url, base_port, endpoint)
 
-  schedule.every(CHECK_DELAY).minutes.do(check_flood)
+  notifier = SMTPNotifier(conf.get('smtp', 'user'), conf.get('smtp', 'password'))
+  notifier.add_notifiees(notify_list)
+
+  flood_detector = FloodDetector(range['min'], range['max'])
+
+  schedule.every(delay).minutes.do(check_flood)
   check_flood()
 
   while running:
@@ -72,8 +81,15 @@ def flood_watch(notify_list):
 
 if __name__ == '__main__':
   GPIO.setmode(GPIO.BCM)
-  notify_list = []
+
   unpack = Unpack()
   args = parser.parse_args(namespace=unpack)
+
+  delay = args.delay
+  range_params = args.range.split(',')
+  range = {min: range_params[0], max: range_params[1]}
+
+  notify_list = []
   notify_list.append(args.notify.split(','))
-  flood_watch(notify_list)
+
+  flood_watch(range, notify_list, delay)
