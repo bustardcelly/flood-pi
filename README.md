@@ -35,7 +35,7 @@ Start
 ---
 The program dependes upon a configuration file named __config.ini__ relative to the __floodpi.py__ file. An example of the __config.ini__ file to provide is:
 
-_config.init_
+_config.ini_
 ```
 [smtp]
 user = <gmail username>
