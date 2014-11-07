@@ -2,6 +2,8 @@ import time
 import argparse
 import schedule
 
+from ConfigParser import SafeConfigParser
+
 from floodpi.control.mcp3008 import ADC
 from floodpi.control.mcp3008 import ADC2
 from floodpi.service.notifier import SMTPNotifier
@@ -15,13 +17,14 @@ CHECK_DELAY = 15
 
 READ_SLEEP = 1
 
+conf = SafeConfigParser()
+conf.read('config.ini')
+
 parser = argparse.ArgumentParser(description="Flood-Pi.")
 parser.add_argument('-n', '--notify', default='bustardcelly@gmail.com', type=str, \
   help='Provide the email addresses to notify (comma-delimited).')
 parser.add_argument('-d', '--delay', default='15', type=int, \
   help='Provide the desired delay (in minutes) to schedule check of flood detection (default 15 minutes).')
-parser.add_argument('-s', '--service', default=None, type=str, \
-  help='Optional RESTful endpoint to POST level information on the delay schedule. (eg, http://floodpi.com/level)')
 
 adc = None
 notifier = None
@@ -52,7 +55,7 @@ def flood_watch(notify_list):
   adc = ADC2()
   adc.open()
 
-  notifier = SMTPNotifier()
+  notifier = SMTPNotifier(conf.get('smtp', 'user'), conf.get('smtp', 'password'))
 
   schedule.every(CHECK_DELAY).minutes.do(check_flood)
   check_flood()
