@@ -14,7 +14,9 @@
 case "$1" in
   start)
     echo "Starting FloodPi"
-    python /home/pi/flood-pi/floodpi.py -n bustardcelly@gmail.com
+    export PYTHONPATH=$PYTHONPATH:/home/pi/.virtualenvs/flood-pi/lib/python2.7/site-packages
+    cd /home/pi/flood-pi
+    python floodpi.py -n bustardcelly@gmail.com
     ;;
   stop)
     echo "Stopping FloodPi"
