@@ -1,3 +1,4 @@
+import json
 import requests
 import smtplib
 
@@ -31,7 +32,7 @@ class RESTNotifier:
     self.base_url = base_url
     self.base_port = base_port
     self._post_endpoint = endpoint
-    print "POST service set to %s:%d/%s" % (self.base_url, self.base_port, self._post_endpoint)
+    print "POST service set to %s:%s/%s" % (self.base_url, self.base_port, self._post_endpoint)
 
   def create_endpoint_url(self, endpoint):
     return "http://%s:%s/%s" % (self.base_url, self.base_port, endpoint)
