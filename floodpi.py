@@ -59,12 +59,14 @@ def flood_watch(range, notify_list, delay):
     base_url = conf.get('service', 'baseUrl')
     base_port = conf.get('service', 'basePort')
     endpoint = conf.get('service', 'postEndpoint')
+    conf_endpoint = conf.get('service', 'confEndpoint')
     service = RESTNotifier(base_url, base_port, endpoint)
+    service.post_configuration(conf_endpoint, delay, range)
 
   notifier = SMTPNotifier(conf.get('smtp', 'user'), conf.get('smtp', 'password'))
   notifier.add_notifiees(notify_list)
 
-  flood_detector = FloodDetector(range['min'], range['max'])
+  flood_detector = FloodDetector(range)
 
   schedule.every(delay).minutes.do(check_flood)
   check_flood()
@@ -87,7 +89,7 @@ if __name__ == '__main__':
 
   delay = args.delay
   range_params = args.range.split(',')
-  range = {min: range_params[0], max: range_params[1]}
+  range = {minimum: range_params[0], maximum: range_params[1]}
 
   notify_list = []
   notify_list.append(args.notify.split(','))
