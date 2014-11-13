@@ -5,4 +5,4 @@ class FloodDetector:
     self.range = range_dict
 
   def detect(self, level):
-    return level <= self.range['minimum'] and level >= self.range['maximum']
+    return level >= self.range['minimum'] and level <= self.range['maximum']
