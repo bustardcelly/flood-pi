@@ -18,13 +18,18 @@ class SMTPNotifier:
   def notify(self, level):
     body = 'A flood detection of level %r has been detected.' % level
     message = 'Subject: %s\n\n%s' % (SUBJECT, body)
-    server = smtplib.SMTP('smtp.gmail.com:587')
-    server.starttls()
-    server.login(self.user, self.password)
-    for email in self.notifiees:
-      print "Sending email to %r" % email
-      server.sendmail(self.user, email, message)
-    server.quit()
+    try:
+      server = smtplib.SMTP('smtp.gmail.com:587')
+      server.starttls()
+      server.login(self.user, self.password)
+      for email in self.notifiees:
+        print "Sending email to %r" % email
+        server.sendmail(self.user, email, message)
+      server.quit()
+    except SMTPException as e:
+      print "SMTP Error: %s" % e.message
+    except:
+      print "Unknown error: %r" % sys.exc_info()[0]
 
 class RESTNotifier:
 
@@ -46,6 +51,9 @@ class RESTNotifier:
       r = requests.post(url, data=json.dumps(data), headers=headers)
     except requests.exceptions.HTTPError as e:
       print 'POST configuration Error: %s' % e.message
+    except:
+      print "Unknown error: %r" % sys.exc_info()[0]
+
 
   def notify(self, level):
     url = self.create_endpoint_url(self.post_endpoint)
@@ -56,6 +64,8 @@ class RESTNotifier:
       r = requests.post(url, data=json.dumps(data), headers=headers)
     except requests.exceptions.HTTPError as e:
       print 'POST level notification Error: %s' % e.message
+    except:
+      print "Unknown error: %r" % sys.exc_info()[0]
 
   @property
   def post_endpoint(self):
