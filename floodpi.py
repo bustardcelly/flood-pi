@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
   delay = args.delay
   range_params = args.range.split(',')
-  range = {'minimum': range_params[0], 'maximum': range_params[1]}
+  range = {'minimum': int(range_params[0]), 'maximum': int(range_params[1])}
 
   notify_list = []
   notify_list.append(args.notify.split(','))
