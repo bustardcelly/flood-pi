@@ -71,11 +71,26 @@ _config.ini_
 user = <name@email.com>
 password = <your password>
 ```
-
 __** You must provide your own custom config.ini file in order for the notifications to work.__
 
+To start the program:
+
 ```
-$ sudo python floodpi.py -n bustardcelly@gmail.com
+$ sudo python floodpi.py -n user@email.com -p 15 -r 300,500
+```
+
+This adds __user@email.com__ as the person to notify of flooding and sets the delay in flood reporting to 15 minutes with a positive detection reading in the range of 300 to 500 value.
+
+```
+Usage: floodpi.py -n <email> [-p] [-r]
+
+Standard Options:
+
+  --notify, -n  Comma-delimited list of email addresses to notify of positive flood detection
+
+  --delay, -d   Delay (in minutes) to run detection and notification (Default: 15)
+
+  --range, -r   The comma-delimited min/max range that is considered within positive flood range (0-1024). (Default 300,500)
 ```
 
 Add to init.d
