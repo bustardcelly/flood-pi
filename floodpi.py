@@ -19,7 +19,7 @@ conf = SafeConfigParser()
 conf.read('config.ini')
 
 parser = argparse.ArgumentParser(description="Flood-Pi.")
-parser.add_argument('-n', '--notify', default='bustardcelly@gmail.com', type=str, \
+parser.add_argument('-n', '--notify', default='', type=str, \
   help='Provide the email addresses to notify (comma-delimited).')
 parser.add_argument('-d', '--delay', default='15', type=int, \
   help='Provide the desired delay (in minutes) to schedule check of flood detection (default 15 minutes).')

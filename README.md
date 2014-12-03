@@ -80,6 +80,8 @@ $ sudo python floodpi.py -n bustardcelly@gmail.com
 
 Add to init.d
 ---
+Included in the repo is a __floodpi.sh.template__ file that can serve as an init script. You will need to modify the __YOU_EMAIL_HERE__ value to be your email and change the filename to __floodpi.sh__ before doing the following:
+
 ```
 $ sudo cp /home/pi/flood-pi/floodpi.sh /etc/init.d/floodpi
 $ sudo update-rc.d floodpi defaults
