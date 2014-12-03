@@ -4,3 +4,5 @@
 ops/
 
 config.ini
+floodpi.sh
+smtp_test.py
