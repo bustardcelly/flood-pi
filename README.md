@@ -2,12 +2,19 @@ flood-pi
 ========
 > Flood detection for Rasperry Pi
 
+The basic premise is that a flood is detected by water completing a circuit and reading an analog value through an ADC on the Raspberry Pi. 
+
+The end leads are 2 copper plates relatively close in proximity. When submersed in water, the circuit is complete and the ADC reports a value that is considered within "flood range" - the occasional low value is expected and higher values tend to mean that the plates have started to touch each other.
+
+When a flood is detected, an email is sent out as notification.
+
 Hardware
 ---
 Check out the [setup](https://github.com/bustardcelly/flood-pi/blob/master/docs/flood-pi.png)
 
 * [Raspberry Pi](http://www.raspberrypi.org/)
 * [MCP3008](https://www.adafruit.com/products/856)
+* [Edimax WiFi Adapter](http://www.edimax.com/edimax/merchandise/merchandise_detail/data/edimax/global/wireless_adapters_n150/ew-7811un)
 * LED
 * 100 ohm Resister
 * Copper Plating (cut into 2 strips)
@@ -34,6 +41,12 @@ _This section is only if you intend to use the SPI interface. It is possible to 
 Follow the instructions described here: [http://www.raspberrypi-spy.co.uk/2013/10/analogue-sensors-on-the-raspberry-pi-using-an-mcp3008/](http://www.raspberrypi-spy.co.uk/2013/10/analogue-sensors-on-the-raspberry-pi-using-an-mcp3008/)
 
 __Actually had to follow instruction for local install of spidev - the one from pip isn't recognized for some reason__
+
+Set-Up WiFi Adapter
+---
+The [Edimax WiFi Adapter](http://www.edimax.com/edimax/merchandise/merchandise_detail/data/edimax/global/wireless_adapters_n150/ew-7811un) was used in this project.
+
+I set up VNC on my pi, and used the __WiFi Config__ program pre-installed on wheezy, as described [here](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-3-network-setup/setting-up-wifi-with-raspbian).
 
 Install
 ---
