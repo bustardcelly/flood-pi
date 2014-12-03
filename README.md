@@ -2,6 +2,16 @@ flood-pi
 ========
 > Flood detection for Rasperry Pi
 
+Hardware
+---
+Check out the [setup](https://github.com/bustardcelly/flood-pi/blob/master/docs/flood-pi.png)
+
+* [Raspberry Pi](http://www.raspberrypi.org/)
+* [MCP3008](https://www.adafruit.com/products/856)
+* LED
+* 100 ohm Resister
+* Copper Plating (cut into 2 strips)
+
 Environment Set Up
 ---
 Base Image: [Raspbian-Wheezy](http://www.raspberrypi.org/downloads/)
@@ -19,7 +29,9 @@ $ sudo pip install virtualenvwrapper
 
 Allow SPI interface & Reboot
 ---
-As described here: [http://www.raspberrypi-spy.co.uk/2013/10/analogue-sensors-on-the-raspberry-pi-using-an-mcp3008/](http://www.raspberrypi-spy.co.uk/2013/10/analogue-sensors-on-the-raspberry-pi-using-an-mcp3008/)
+_This section is only if you intend to use the SPI interface. It is possible to use any other standard pin along with an ADC (such as the [mcp3008](https://www.adafruit.com/products/856) used in this project)._
+
+Follow the instructions described here: [http://www.raspberrypi-spy.co.uk/2013/10/analogue-sensors-on-the-raspberry-pi-using-an-mcp3008/](http://www.raspberrypi-spy.co.uk/2013/10/analogue-sensors-on-the-raspberry-pi-using-an-mcp3008/)
 
 __Actually had to follow instruction for local install of spidev - the one from pip isn't recognized for some reason__
 
