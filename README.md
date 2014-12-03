@@ -2,9 +2,12 @@ flood-pi
 ========
 > Flood detection for Rasperry Pi
 
-
 Environment Set Up
 ---
+Base Image: [Raspbian-Wheezy](http://www.raspberrypi.org/downloads/)
+
+SSH into your pi and issue the following:
+
 ```
 $ sudo apt-get update
 $ sudo apt-get install python-pip python-dev build-essential
@@ -33,13 +36,15 @@ $ sudo pip install -r requirements.txt ---system-site-packages
 
 Start
 ---
-The program dependes upon a configuration file named __config.ini__ relative to the __floodpi.py__ file. An example of the __config.ini__ file to provide is:
+The program dependes upon a configuration file named __config.ini__ relative to the __floodpi.py__ file. A __config.ini.template__ file is available from the repo and should be copied and values changed as needed.
+
+An example of the __config.ini__ file to provide is:
 
 _config.ini_
 ```
 [smtp]
-user = <gmail username>
-password = <gmail password>
+user = <name@email.com>
+password = <your password>
 ```
 
 __** You must provide your own custom config.ini file in order for the notifications to work.__
@@ -63,8 +68,10 @@ Reporting is optional and service properties can be set in the __config.ini__ fi
 _config.ini_
 ```
 [service]
-baseUrl = <flood-pi-admin url>
-post_endpoint = level
+baseUrl = <service host>
+basePort = <service port>
+postEndpoint = <endpoint to POST level reading data (eg, level)>
+confEndpoint = <endpoint to POST configuration data (eg, configuration)>
 ```
 
 As an example, the [flood-pi-admin](https://github.com/bustardcelly/flood-pi-admin) project is a RESTful service that provides an API to POST levels and present consumed data.

@@ -1,0 +1,9 @@
+[smtp]
+user = <name@email.com>
+password = <your password>
+
+[service]
+baseUrl = <service host>
+basePort = <service port>
+postEndpoint = <endpoint to POST level reading data (eg, level)>
+confEndpoint = <endpoint to POST configuration data (eg, configuration)>
