@@ -86,11 +86,15 @@ Usage: floodpi.py -n <email> [-p] [-r]
 
 Standard Options:
 
-  --notify, -n  Comma-delimited list of email addresses to notify of positive flood detection
+  --notify, -n  Comma-delimited list of email addresses to 
+                  notify of positive flood detection
 
-  --delay, -d   Delay (in minutes) to run detection and notification (Default: 15)
+  --delay, -d   Delay (in minutes) to run detection and 
+                  notification (Default: 15)
 
-  --range, -r   The comma-delimited min/max range that is considered within positive flood range (0-1024). (Default 300,500)
+  --range, -r   The comma-delimited min/max range that is 
+                  considered within positive flood range 
+                  (Available 0-1024), (Default 300,500)
 ```
 
 Add to init.d
