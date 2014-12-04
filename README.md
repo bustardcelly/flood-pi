@@ -123,3 +123,7 @@ confEndpoint = <endpoint to POST configuration data (eg, configuration)>
 ```
 
 As an example, the [flood-pi-admin](https://github.com/bustardcelly/flood-pi-admin) project is a RESTful service that provides an API to POST levels and present consumed data.
+
+Additional Information
+---
+[http://custardbelly.com/blog/blog-posts/2014/12/4/flood-pi/index.html](http://custardbelly.com/blog/blog-posts/2014/12/4/flood-pi/index.html)
