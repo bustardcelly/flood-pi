@@ -8,6 +8,8 @@ The end leads are 2 copper plates relatively close in proximity. When submersed 
 
 When a flood is detected, an email is sent out as notification.
 
+_There is also a companion project to flood-pi - [flood-pi-admin](https://github.com/bustardcelly/flood-pi-admin) - which is a RESTful service to post level reading data._
+
 Hardware
 ---
 Check out the [setup](https://github.com/bustardcelly/flood-pi/blob/master/docs/flood-pi.png)
